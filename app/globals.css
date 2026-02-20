@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2d6a4f;
+  --color-primary-light: #e9f5ef;
+  --color-primary-dark: #1b4332;
+  --color-background: #f8f9f9;
+  --color-card: #ffffff;
+  --color-foreground: #1a1a1a;
+  --color-accent: #ff7b54;
+  --color-subtitle: #666666;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+  --shadow-premium: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode overrides (toggled by adding `dark` class to <html>) */
+.dark {
+  --color-background: #0b0f0d;
+  --color-card: #101614;
+  --color-foreground: #f3f6f4;
+  --color-subtitle: #a6b0aa;
+  --shadow-premium: 0 6px 26px rgba(0, 0, 0, 0.35);
+}
+
+@utility premium-shadow {
+  box-shadow: var(--shadow-premium);
+}
+
+@utility glass-card {
+  background-color: rgb(255 255 255 / 0.8);
+  backdrop-filter: blur(12px);
+  border-width: 1px;
+  border-color: rgb(255 255 255 / 0.2);
+  box-shadow: var(--shadow-sm);
+}
+
+@utility btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: var(--radius-2xl);
+  font-weight: 600;
+  transition-property: all;
+  box-shadow: var(--shadow-premium);
+}
+
+@utility btn-primary-hover {
+  transform: scale(1.02);
+}
+
+@utility btn-secondary {
+  background-color: white;
+  color: var(--color-primary);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: var(--radius-2xl);
+  font-weight: 600;
+  border-width: 1px;
+  border-color: rgb(45 106 79 / 0.1);
+  transition-property: all;
+  box-shadow: var(--shadow-premium);
+}
+
+@utility btn-secondary-hover {
+  background-color: var(--color-primary-light);
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility no-scrollbar-webkit {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  -webkit-font-smoothing: antialiased;
+}

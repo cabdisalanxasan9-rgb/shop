@@ -1,0 +1,179 @@
+// Shared order types and data management
+export interface OrderItem {
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+    weight: string;
+}
+
+export interface Driver {
+    name: string;
+    rating: number;
+    image: string;
+    phone: string;
+}
+
+export interface Order {
+    id: string;
+    status: "Delivered" | "In Progress" | "Cancelled" | "Processing" | "Confirmed" | "On the way";
+    date: string;
+    total: number;
+    items: OrderItem[];
+    timeline?: {
+        status: string;
+        time: string;
+        completed: boolean;
+    }[];
+    driver?: Driver;
+    address?: string;
+    itemCount?: number;
+    labels?: string;
+    statusColor?: string;
+}
+
+// Centralized order data
+export const ordersData: Order[] = [
+    {
+        id: "VF-98721",
+        status: "Delivered",
+        date: "Oct 24, 2023",
+        total: 24.50,
+        itemCount: 5,
+        labels: "Potato, Bell Pepper, Carrots...",
+        items: [
+            {
+                id: 1,
+                name: "Organic Bananas",
+                price: 4.99,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&q=80&w=200",
+                weight: "1kg"
+            },
+            {
+                id: 2,
+                name: "Red Bell Pepper",
+                price: 2.50,
+                quantity: 3,
+                image: "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&q=80&w=200",
+                weight: "500g"
+            },
+            {
+                id: 3,
+                name: "Fresh Avocado",
+                price: 3.99,
+                quantity: 1,
+                image: "https://images.unsplash.com/photo-1523049673856-38abcd7f905d?auto=format&fit=crop&q=80&w=200",
+                weight: "2pcs"
+            }
+        ],
+        timeline: [
+            { status: "Order Placed", time: "10:30 AM", completed: true },
+            { status: "Confirmed", time: "10:35 AM", completed: true },
+            { status: "Processing", time: "11:00 AM", completed: true },
+            { status: "On the way", time: "11:20 AM", completed: true },
+            { status: "Delivered", time: "11:45 AM", completed: true },
+        ],
+        driver: {
+            name: "Omar Ali",
+            rating: 4.8,
+            image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=100",
+            phone: "+252 61 555 0123"
+        },
+        address: "Maka Al-Mukarama Street, Waberi District, Mogadishu"
+    },
+    {
+        id: "VF-98552",
+        status: "In Progress",
+        statusColor: "text-orange-500 bg-orange-50",
+        date: "Today, 10:30 AM",
+        total: 18.20,
+        itemCount: 3,
+        labels: "Broccoli, Tomato, Spinach",
+        items: [
+            {
+                id: 4,
+                name: "Fresh Broccoli",
+                price: 5.99,
+                quantity: 1,
+                image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&q=80&w=200",
+                weight: "500g"
+            },
+            {
+                id: 5,
+                name: "Roma Tomatoes",
+                price: 3.99,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=200",
+                weight: "1kg"
+            }
+        ],
+        timeline: [
+            { status: "Order Placed", time: "10:30 AM", completed: true },
+            { status: "Confirmed", time: "10:35 AM", completed: true },
+            { status: "Processing", time: "11:00 AM", completed: true },
+            { status: "On the way", time: "11:20 AM", completed: false },
+            { status: "Delivered", time: "11:45 AM", completed: false },
+        ],
+        driver: {
+            name: "Ahmed Hassan",
+            rating: 4.9,
+            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100",
+            phone: "+252 61 555 0456"
+        },
+        address: "Hodan District, Near KM5, Mogadishu"
+    },
+    {
+        id: "VF-98410",
+        status: "Cancelled",
+        statusColor: "text-red-500 bg-red-50",
+        date: "Oct 18, 2023",
+        total: 42.00,
+        itemCount: 2,
+        labels: "Mushroom, Salad mix...",
+        items: [
+            {
+                id: 6,
+                name: "Fresh Mushrooms",
+                price: 12.00,
+                quantity: 1,
+                image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=200",
+                weight: "250g"
+            },
+            {
+                id: 7,
+                name: "Mixed Salad Greens",
+                price: 30.00,
+                quantity: 1,
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=200",
+                weight: "500g"
+            }
+        ],
+        timeline: [
+            { status: "Order Placed", time: "2:30 PM", completed: true },
+            { status: "Cancelled", time: "2:45 PM", completed: true },
+        ]
+    }
+];
+
+// Helper functions
+export function getOrderById(id: string): Order | undefined {
+    return ordersData.find(order => order.id === id);
+}
+
+export function getOrdersByStatus(status?: string, orders?: Order[]): Order[] {
+    const ordersToFilter = orders || ordersData;
+    if (!status || status === "All") return ordersToFilter;
+    if (status === "Ongoing") return ordersToFilter.filter(order => 
+        order.status === "In Progress" || order.status === "Processing" || order.status === "Confirmed" || order.status === "On the way"
+    );
+    if (status === "History") return ordersToFilter.filter(order => 
+        order.status === "Delivered" || order.status === "Cancelled"
+    );
+    return ordersToFilter.filter(order => order.status === status);
+}
+
+export function getOrderImages(order: Order): string[] {
+    return order.items.slice(0, 3).map(item => item.image);
+}
