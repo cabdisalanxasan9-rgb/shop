@@ -14,7 +14,7 @@ export interface Product {
     benefits?: Array<{ title: string; description: string; icon?: string }>;
 }
 
-// Initial products data
+// Initial products data with high-quality cloud images
 export const initialProducts: Product[] = [
     {
         id: "p1",
@@ -22,7 +22,7 @@ export const initialProducts: Product[] = [
         title: "Fresh Red Tomatoes",
         price: 2.50,
         unit: "kg",
-        image: "/images/veg-tomato.jpg",
+        image: "https://images.unsplash.com/photo-1518977676601-b53f02bad675?auto=format&fit=crop&q=80&w=600",
         isFavorite: true,
     },
     {
@@ -31,7 +31,7 @@ export const initialProducts: Product[] = [
         title: "Organic Broccoli",
         price: 3.20,
         unit: "pc",
-        image: "/images/veg-broccoli.jpg",
+        image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p3",
@@ -39,7 +39,7 @@ export const initialProducts: Product[] = [
         title: "Sweet Carrots",
         price: 1.80,
         unit: "kg",
-        image: "/images/veg-carrot.jpg",
+        image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p4",
@@ -47,7 +47,7 @@ export const initialProducts: Product[] = [
         title: "Bell Peppers",
         price: 4.50,
         unit: "kg",
-        image: "/images/veg-peppers-mix.jpg",
+        image: "https://images.unsplash.com/photo-1566232392379-afd9298e6a46?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p5",
@@ -55,7 +55,7 @@ export const initialProducts: Product[] = [
         title: "Organic Cucumbers",
         price: 1.20,
         unit: "pc",
-        image: "/images/veg-cucumber.jpg",
+        image: "https://images.unsplash.com/photo-1449339854873-750e6df51301?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p6",
@@ -63,7 +63,7 @@ export const initialProducts: Product[] = [
         title: "Fresh Garlic",
         price: 0.50,
         unit: "pc",
-        image: "/images/veg-garlic.jpg",
+        image: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p7",
@@ -71,7 +71,7 @@ export const initialProducts: Product[] = [
         title: "Yellow Onions",
         price: 1.50,
         unit: "kg",
-        image: "/images/veg-onion.jpg",
+        image: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p8",
@@ -79,7 +79,7 @@ export const initialProducts: Product[] = [
         title: "Baby Spinach",
         price: 2.80,
         unit: "kg",
-        image: "/images/veg-spinach.jpg",
+        image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p9",
@@ -87,7 +87,7 @@ export const initialProducts: Product[] = [
         title: "Fresh Eggplant",
         price: 2.00,
         unit: "kg",
-        image: "/images/veg-eggplant.jpg",
+        image: "https://images.unsplash.com/photo-1528137858148-d018f3a34494?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p10",
@@ -95,7 +95,7 @@ export const initialProducts: Product[] = [
         title: "Organic Potatoes",
         price: 1.40,
         unit: "kg",
-        image: "/images/veg-potato.jpg",
+        image: "https://images.unsplash.com/photo-1518977676601-b53f02bad675?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p11",
@@ -103,7 +103,7 @@ export const initialProducts: Product[] = [
         title: "Wild Mushrooms",
         price: 5.50,
         unit: "kg",
-        image: "/images/veg-mushroom.jpg",
+        image: "https://images.unsplash.com/photo-1563212623-0df1567bc7d2?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p12",
@@ -111,7 +111,7 @@ export const initialProducts: Product[] = [
         title: "Bell Pepper Mix",
         price: 4.80,
         unit: "kg",
-        image: "/images/veg-peppers-mix.jpg",
+        image: "https://images.unsplash.com/photo-1566232392379-afd9298e6a46?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p13",
@@ -119,7 +119,7 @@ export const initialProducts: Product[] = [
         title: "Organic Rolled Oats",
         price: 3.50,
         unit: "kg",
-        image: "/images/veg-oats.jpg",
+        image: "https://images.unsplash.com/photo-1586439702132-73016aae2449?auto=format&fit=crop&q=80&w=600",
     },
 ];
 
