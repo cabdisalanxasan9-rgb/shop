@@ -3,9 +3,17 @@ import { neon } from '@neondatabase/serverless';
 const getSql = () => {
     // Vercel set the prefix to STORAGE, so it will be STORAGE_URL
     const url = process.env.STORAGE_URL || process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+    // Debug logging (will show in Vercel Logs)
+    console.log('DB Env Check:', {
+        hasStorage: !!process.env.STORAGE_URL,
+        hasDatabase: !!process.env.DATABASE_URL,
+        hasPostgres: !!process.env.POSTGRES_URL
+    });
+
     if (!url) {
         return ((...args: any[]) => {
-            throw new Error("Database connection not found. Please click 'Connect' in Vercel Storage settings.");
+            throw new Error(`Database connection not found. Available envs: ${Object.keys(process.env).filter(k => k.includes('URL')).join(', ')}`);
         }) as any;
     }
     return neon(url);
