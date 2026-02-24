@@ -4,7 +4,8 @@ import {
     User,
     generateToken,
     sanitizeUser,
-    validateRegisterInput
+    validateRegisterInput,
+    mapAuthError
 } from '@/lib/server-auth';
 
 export const runtime = 'nodejs';
@@ -49,6 +50,7 @@ export async function POST(req: NextRequest) {
         }, { status: 201 });
     } catch (error) {
         console.error('Register route error:', error);
-        return NextResponse.json({ error: 'Server error during registration' }, { status: 500 });
+        const mapped = mapAuthError(error, 'Server error during registration');
+        return NextResponse.json({ error: mapped.error }, { status: mapped.status });
     }
 }

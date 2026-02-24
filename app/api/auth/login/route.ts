@@ -5,7 +5,8 @@ import {
     comparePassword,
     generateToken,
     sanitizeUser,
-    validateLoginInput
+    validateLoginInput,
+    mapAuthError
 } from '@/lib/server-auth';
 
 export const runtime = 'nodejs';
@@ -43,6 +44,7 @@ export async function POST(req: NextRequest) {
         });
     } catch (error) {
         console.error('Login route error:', error);
-        return NextResponse.json({ error: 'Server error during login' }, { status: 500 });
+        const mapped = mapAuthError(error, 'Server error during login');
+        return NextResponse.json({ error: mapped.error }, { status: mapped.status });
     }
 }

@@ -132,3 +132,43 @@ export function getBearerToken(authHeader: string | null) {
     if (!authHeader?.startsWith('Bearer ')) return null;
     return authHeader.slice(7);
 }
+
+export function mapAuthError(error: any, fallback: string) {
+    const rawMessage = typeof error?.message === 'string' ? error.message : '';
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    if (error?.code === 11000) {
+        return { status: 400, error: 'User with this email already exists' };
+    }
+
+    if (error?.name === 'ValidationError') {
+        const validationMessage = Object.values(error.errors || {})[0]?.message;
+        return { status: 400, error: validationMessage || 'Invalid input data' };
+    }
+
+    if (rawMessage.includes('MONGODB_URI is not set')) {
+        return {
+            status: 500,
+            error: 'Server configuration error: MONGODB_URI is missing in environment variables.'
+        };
+    }
+
+    if (
+        error?.name === 'MongoServerSelectionError' ||
+        /ECONNREFUSED|ENOTFOUND|timed out|failed to connect/i.test(rawMessage)
+    ) {
+        return {
+            status: 503,
+            error: 'Database connection failed. Check MONGODB_URI and MongoDB Atlas Network Access.'
+        };
+    }
+
+    if (!isProduction && rawMessage) {
+        return {
+            status: 500,
+            error: `${fallback}: ${rawMessage}`
+        };
+    }
+
+    return { status: 500, error: fallback };
+}
