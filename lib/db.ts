@@ -1,11 +1,11 @@
 import { neon } from '@neondatabase/serverless';
 
 const getSql = () => {
-    const url = process.env.DATABASE_URL;
+    // Vercel set the prefix to STORAGE, so it will be STORAGE_URL
+    const url = process.env.STORAGE_URL || process.env.DATABASE_URL || process.env.POSTGRES_URL;
     if (!url) {
-        // Return a dummy function or throw error only when called, not during build evaluation
         return ((...args: any[]) => {
-            throw new Error("DATABASE_URL is not defined. Please connect your Neon database in Vercel path: Storage -> Connect.");
+            throw new Error("Database connection not found. Please click 'Connect' in Vercel Storage settings.");
         }) as any;
     }
     return neon(url);
