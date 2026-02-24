@@ -5,6 +5,8 @@ import { sql, initDB } from '@/lib/db';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'jannofresh-secret-key-2024';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
     try {
         const { name, email, password, phone } = await req.json();

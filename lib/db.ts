@@ -1,7 +1,17 @@
 import { neon } from '@neondatabase/serverless';
 
-// Neon automatically uses DATABASE_URL env variable set by Vercel
-const sql = neon(process.env.DATABASE_URL!);
+const getSql = () => {
+    const url = process.env.DATABASE_URL;
+    if (!url) {
+        // Return a dummy function or throw error only when called, not during build evaluation
+        return ((...args: any[]) => {
+            throw new Error("DATABASE_URL is not defined. Please connect your Neon database in Vercel path: Storage -> Connect.");
+        }) as any;
+    }
+    return neon(url);
+};
+
+const sql = getSql();
 
 // Create users table if it doesn't exist
 export async function initDB() {
