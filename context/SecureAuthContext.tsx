@@ -30,6 +30,13 @@ interface AuthContextType extends AuthState {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const extractErrorMessage = (error: any, fallback: string) => {
+    if (error?.error && typeof error.error === 'string') return error.error;
+    if (error?.message && typeof error.message === 'string') return error.message;
+    if (typeof error === 'string') return error;
+    return fallback;
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [authState, setAuthState] = useState<AuthState>({
         user: null,
@@ -87,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setAuthState(prev => ({
                 ...prev,
                 isLoading: false,
-                error: error.error || 'Login failed'
+                error: extractErrorMessage(error, 'Login failed')
             }));
             throw error;
         }
@@ -109,7 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setAuthState(prev => ({
                 ...prev,
                 isLoading: false,
-                error: error.error || 'Registration failed'
+                error: extractErrorMessage(error, 'Registration failed')
             }));
             throw error;
         }

@@ -153,6 +153,27 @@ export function mapAuthError(error: any, fallback: string) {
         };
     }
 
+    if (error?.name === 'MongoParseError' || /Invalid scheme|Invalid connection string|URI malformed/i.test(rawMessage)) {
+        return {
+            status: 500,
+            error: 'Invalid MONGODB_URI format. Verify the MongoDB connection string in Vercel environment variables.'
+        };
+    }
+
+    if (/auth failed|Authentication failed|bad auth|password|SCRAM/i.test(rawMessage)) {
+        return {
+            status: 503,
+            error: 'MongoDB authentication failed. Check MongoDB username/password in MONGODB_URI.'
+        };
+    }
+
+    if (/querySrv ENOTFOUND|getaddrinfo ENOTFOUND|DNS/i.test(rawMessage)) {
+        return {
+            status: 503,
+            error: 'MongoDB host not found. Check cluster hostname in MONGODB_URI.'
+        };
+    }
+
     if (
         error?.name === 'MongoServerSelectionError' ||
         /ECONNREFUSED|ENOTFOUND|timed out|failed to connect/i.test(rawMessage)
