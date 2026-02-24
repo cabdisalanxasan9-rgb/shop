@@ -87,7 +87,7 @@ export async function connectToDatabase() {
 
 export function generateToken(id: string) {
     return jwt.sign({ id }, jwtSecret, {
-        expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+        expiresIn: '7d'
     });
 }
 
@@ -142,7 +142,7 @@ export function mapAuthError(error: any, fallback: string) {
     }
 
     if (error?.name === 'ValidationError') {
-        const validationMessage = Object.values(error.errors || {})[0]?.message;
+        const validationMessage = (Object.values(error.errors || {}) as any[])[0]?.message;
         return { status: 400, error: validationMessage || 'Invalid input data' };
     }
 

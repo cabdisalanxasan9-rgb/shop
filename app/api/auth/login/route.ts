@@ -1,21 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-    connectToDatabase,
-    User,
-    comparePassword,
-    generateToken,
-    sanitizeUser,
-    validateLoginInput,
-    mapAuthError
-} from '@/lib/server-auth';
-
-export const runtime = 'nodejs';
+import bcrypt from 'bcryptjs';
+import { connectToDatabase, User, generateToken, validateLoginInput, sanitizeUser, mapAuthError } from '@/lib/server-auth';
 
 export async function POST(req: NextRequest) {
     try {
-        const body = await req.json();
-        const email = body?.email;
-        const password = body?.password;
+        const { email, password } = await req.json();
 
         const validationError = validateLoginInput(email, password);
         if (validationError) {
@@ -24,27 +13,23 @@ export async function POST(req: NextRequest) {
 
         await connectToDatabase();
 
-        const normalizedEmail = email.toLowerCase().trim();
-        const user = await User.findOne({ email: normalizedEmail }).select('+password');
+        const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
         if (!user) {
             return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
         }
 
-        const isMatch = await comparePassword(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
         }
 
         const token = generateToken(user._id.toString());
 
-        return NextResponse.json({
-            message: 'Login successful',
-            user: sanitizeUser(user),
-            token
-        });
-    } catch (error) {
-        console.error('Login route error:', error);
-        const mapped = mapAuthError(error, 'Server error during login');
-        return NextResponse.json({ error: mapped.error }, { status: mapped.status });
+        return NextResponse.json({ message: 'Login successful', user: sanitizeUser(user), token });
+
+    } catch (error: any) {
+        console.error('Login error:', error);
+        const { status, error: msg } = mapAuthError(error, 'Server error during login');
+        return NextResponse.json({ error: msg }, { status });
     }
 }

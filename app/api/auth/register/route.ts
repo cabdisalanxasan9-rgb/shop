@@ -1,22 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-    connectToDatabase,
-    User,
-    generateToken,
-    sanitizeUser,
-    validateRegisterInput,
-    mapAuthError
-} from '@/lib/server-auth';
-
-export const runtime = 'nodejs';
+import bcrypt from 'bcryptjs';
+import { connectToDatabase, User, generateToken, validateRegisterInput, sanitizeUser, mapAuthError } from '@/lib/server-auth';
 
 export async function POST(req: NextRequest) {
     try {
-        const body = await req.json();
-        const name = body?.name;
-        const email = body?.email;
-        const password = body?.password;
-        const phone = body?.phone;
+        const { name, email, password, phone } = await req.json();
 
         const validationError = validateRegisterInput(name, email, password, phone);
         if (validationError) {
@@ -25,32 +13,31 @@ export async function POST(req: NextRequest) {
 
         await connectToDatabase();
 
-        const normalizedEmail = email.toLowerCase().trim();
-        const existingUser = await User.findOne({ email: normalizedEmail });
-        if (existingUser) {
+        const existing = await User.findOne({ email: email.toLowerCase() });
+        if (existing) {
             return NextResponse.json({ error: 'User with this email already exists' }, { status: 400 });
         }
 
-        const user = new User({
-            name: name.trim(),
-            email: normalizedEmail,
-            password,
-            phone: phone ? phone.trim() : '',
-            avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`
-        });
+        const hashedPassword = await bcrypt.hash(password, 12);
 
-        await user.save();
+        const user = await User.create({
+            name: name.trim(),
+            email: email.toLowerCase().trim(),
+            password: hashedPassword,
+            phone: phone ? phone.trim() : '',
+            avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=4ade80&color=fff`,
+        });
 
         const token = generateToken(user._id.toString());
 
-        return NextResponse.json({
-            message: 'User registered successfully',
-            user: sanitizeUser(user),
-            token
-        }, { status: 201 });
-    } catch (error) {
-        console.error('Register route error:', error);
-        const mapped = mapAuthError(error, 'Server error during registration');
-        return NextResponse.json({ error: mapped.error }, { status: mapped.status });
+        return NextResponse.json(
+            { message: 'User registered successfully', user: sanitizeUser(user), token },
+            { status: 201 }
+        );
+
+    } catch (error: any) {
+        console.error('Register error:', error);
+        const { status, error: msg } = mapAuthError(error, 'Server error during registration');
+        return NextResponse.json({ error: msg }, { status });
     }
 }
