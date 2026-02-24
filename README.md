@@ -124,9 +124,15 @@ Production example:
 
 ```env
 NODE_ENV=production
-NEXT_PUBLIC_API_URL=https://api.yourdomain.com/api
-CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+NEXT_PUBLIC_API_URL=/api
+MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>
+JWT_SECRET=<long-random-secret>
 ```
+
+### Vercel setup (single project)
+- Deploy this repository directly to Vercel.
+- Add environment variables in Vercel: `MONGODB_URI`, `JWT_SECRET`, optional `JWT_EXPIRES_IN`.
+- Keep `NEXT_PUBLIC_API_URL=/api` so frontend calls internal Next API routes.
 
 ## 🌐 API Endpoints
 
