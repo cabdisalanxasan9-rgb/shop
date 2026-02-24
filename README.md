@@ -116,7 +116,16 @@ MONGODB_URI=mongodb://localhost:27017/JannoFresh
 JWT_SECRET=your-super-secret-jwt-key-change-in-production
 JWT_EXPIRES_IN=7d
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
+CORS_ORIGINS=http://localhost:3000
 NODE_ENV=development
+```
+
+Production example:
+
+```env
+NODE_ENV=production
+NEXT_PUBLIC_API_URL=https://api.yourdomain.com/api
+CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
 ```
 
 ## 🌐 API Endpoints

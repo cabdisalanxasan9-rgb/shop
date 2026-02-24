@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 // Create axios instance with default config
 const api = axios.create({
@@ -54,7 +54,11 @@ export const authAPI = {
             });
             
             return response.data;
-        } catch (error) {
+        } catch (error: any) {
+            if (!error.response) {
+                throw { error: 'Cannot reach authentication server. Check NEXT_PUBLIC_API_URL and backend deployment.' };
+            }
+
             throw error.response?.data || { error: 'Registration failed' };
         }
     },
@@ -78,7 +82,11 @@ export const authAPI = {
             });
             
             return response.data;
-        } catch (error) {
+        } catch (error: any) {
+            if (!error.response) {
+                throw { error: 'Cannot reach authentication server. Check NEXT_PUBLIC_API_URL and backend deployment.' };
+            }
+
             throw error.response?.data || { error: 'Login failed' };
         }
     },
