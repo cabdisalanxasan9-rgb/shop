@@ -38,6 +38,8 @@ export async function POST(req: NextRequest) {
     } catch (error: any) {
         console.error('Register error:', error);
         const { status, error: msg } = mapAuthError(error, 'Server error during registration');
-        return NextResponse.json({ error: msg }, { status });
+        // Include raw error in dev/debugging — remove after fix
+        const detail = error?.message || error?.name || String(error);
+        return NextResponse.json({ error: msg, detail }, { status });
     }
 }
