@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: jannofresh-store
+    runtime: node
+    plan: free
+    autoDeploy: true
+    buildCommand: npm ci; npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false
