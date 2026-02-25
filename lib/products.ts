@@ -14,6 +14,17 @@ export interface Product {
     benefits?: Array<{ title: string; description: string; icon?: string }>;
 }
 
+export const CATEGORIES = [
+    { id: "leafy-greens", label: "Leafy Greens", icon: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=200", color: "bg-emerald-50 text-emerald-600" },
+    { id: "root-vegies", label: "Root Vegies", icon: "https://images.unsplash.com/photo-1590779033100-9f60705a2f3b?auto=format&fit=crop&q=80&w=200", color: "bg-orange-50 text-orange-600" },
+    { id: "peppers", label: "Peppers", icon: "https://images.unsplash.com/photo-1566232392379-afd9298e6a46?auto=format&fit=crop&q=80&w=200", color: "bg-red-50 text-red-600" },
+    { id: "fruits", label: "Fruits", icon: "https://images.unsplash.com/photo-1619566639371-13ed1100293a?auto=format&fit=crop&q=80&w=200", color: "bg-yellow-50 text-yellow-600" },
+    { id: "grains", label: "Grains", icon: "https://images.unsplash.com/photo-1586439702132-73016aae2449?auto=format&fit=crop&q=80&w=200", color: "bg-amber-50 text-amber-600" },
+    { id: "herbs", label: "Herbs", icon: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?auto=format&fit=crop&q=80&w=200", color: "bg-teal-50 text-teal-600" },
+    { id: "fungi", label: "Fungi", icon: "https://images.unsplash.com/photo-1563212623-0df1567bc7d2?auto=format&fit=crop&q=80&w=200", color: "bg-stone-50 text-stone-600" },
+    { id: "berries", label: "Berries", icon: "https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&q=80&w=200", color: "bg-purple-50 text-purple-600" },
+];
+
 // Initial products data with high-quality cloud images
 export const initialProducts: Product[] = [
     {
@@ -83,7 +94,7 @@ export const initialProducts: Product[] = [
     },
     {
         id: "p9",
-        categoryId: "root-vegies",
+        categoryId: "fruits",
         title: "Fresh Eggplant",
         price: 2.00,
         unit: "kg",
@@ -120,6 +131,22 @@ export const initialProducts: Product[] = [
         price: 3.50,
         unit: "kg",
         image: "https://images.unsplash.com/photo-1586439702132-73016aae2449?auto=format&fit=crop&q=80&w=600",
+    },
+    {
+        id: "p14",
+        categoryId: "berries",
+        title: "Fresh Strawberries",
+        price: 6.50,
+        unit: "kg",
+        image: "https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&q=80&w=600",
+    },
+    {
+        id: "p15",
+        categoryId: "fruits",
+        title: "Sweet Bananas",
+        price: 1.20,
+        unit: "kg",
+        image: "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&q=80&w=600",
     },
 ];
 

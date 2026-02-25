@@ -5,23 +5,13 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/SecureAuthContext";
 import SecureAuthGuard from "@/components/SecureAuthGuard";
 import { useProducts } from "@/context/ProductsContext";
+import { CATEGORIES as categories } from "@/lib/products";
 import SearchHeader from "@/components/SearchHeader";
 import CategoryItem from "@/components/CategoryItem";
 import ProductCard from "@/components/ProductCard";
-import { MoveRight, ShoppingBag, User } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-
-const categories = [
-  { id: "leafy-greens", label: "Leafy Greens", icon: "/images/cat-greens.jpg", color: "bg-emerald-50 text-emerald-600" },
-  { id: "root-vegies", label: "Root Vegies", icon: "/images/cat-root.jpg", color: "bg-orange-50 text-orange-600" },
-  { id: "peppers", label: "Peppers", icon: "/images/cat-peppers.jpg", color: "bg-red-50 text-red-600" },
-  { id: "fruits", label: "Fruits", icon: "/images/cat-fruits.jpg", color: "bg-yellow-50 text-yellow-600" },
-  { id: "grains", label: "Grains", icon: "/images/cat-grains.jpg", color: "bg-amber-50 text-amber-600" },
-  { id: "herbs", label: "Herbs", icon: "/images/cat-herbs.jpg", color: "bg-teal-50 text-teal-600" },
-  { id: "fungi", label: "Fungi", icon: "/images/cat-fungi.jpg", color: "bg-stone-50 text-stone-600" },
-  { id: "berries", label: "Berries", icon: "/images/cat-berries.jpg", color: "bg-purple-50 text-purple-600" },
-];
 
 export default function HomePage() {
   const router = useRouter();
@@ -80,7 +70,7 @@ export default function HomePage() {
           <section className="px-6">
             <div className="relative h-48 md:h-64 w-full rounded-[2.5rem] overflow-hidden group premium-shadow ring-1 ring-black/5">
               <Image
-                src="/images/hero-banner.jpg"
+                src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1200"
                 alt="Fresh farm banner"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
