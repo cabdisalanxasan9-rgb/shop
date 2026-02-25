@@ -3,6 +3,34 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product, initialProducts } from '@/lib/products';
 
+const PRODUCTS_STORAGE_KEY = 'jannofresh:products_v4';
+const LEGACY_PRODUCTS_STORAGE_KEYS = ['jannofresh:products_v3'];
+
+const isLocalImagePath = (image?: string) => {
+    if (!image || typeof image !== 'string') return false;
+    return image.startsWith('/images/') || image.startsWith('data:image/');
+};
+
+const normalizeProducts = (savedProducts: Product[]): Product[] => {
+    const baseById = new Map(initialProducts.map((product) => [product.id, product]));
+    const savedById = new Map(savedProducts.map((product) => [product.id, product]));
+
+    const normalizedDefaults = initialProducts.map((defaultProduct) => {
+        const saved = savedById.get(defaultProduct.id);
+        if (!saved) return defaultProduct;
+
+        const resolvedImage = isLocalImagePath(saved.image) ? saved.image : defaultProduct.image;
+        return {
+            ...defaultProduct,
+            ...saved,
+            image: resolvedImage,
+        };
+    });
+
+    const customProducts = savedProducts.filter((product) => !baseById.has(product.id));
+    return [...normalizedDefaults, ...customProducts];
+};
+
 interface ProductsContextType {
     products: Product[];
     addProduct: (product: Product) => void;
@@ -19,25 +47,48 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
     const [products, setProducts] = useState<Product[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Load products from localStorage or use initial data
+    // Load products from localStorage (with migration) or use initial data
     useEffect(() => {
         try {
-            const saved = localStorage.getItem('jannofresh:products_v3');
-            if (saved) {
-                setProducts(JSON.parse(saved));
-            } else {
-                setProducts(initialProducts);
-                localStorage.setItem('jannofresh:products_v3', JSON.stringify(initialProducts));
+            const currentSaved = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+            if (currentSaved) {
+                const parsed = JSON.parse(currentSaved) as Product[];
+                const normalized = normalizeProducts(parsed);
+                setProducts(normalized);
+                localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(normalized));
+                return;
+            }
+
+            let legacyProducts: Product[] | null = null;
+            for (const legacyKey of LEGACY_PRODUCTS_STORAGE_KEYS) {
+                const legacyRaw = localStorage.getItem(legacyKey);
+                if (!legacyRaw) continue;
+
+                legacyProducts = JSON.parse(legacyRaw) as Product[];
+                break;
+            }
+
+            const resolvedProducts = legacyProducts ? normalizeProducts(legacyProducts) : initialProducts;
+            setProducts(resolvedProducts);
+            localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(resolvedProducts));
+
+            for (const legacyKey of LEGACY_PRODUCTS_STORAGE_KEYS) {
+                localStorage.removeItem(legacyKey);
             }
         } catch {
             setProducts(initialProducts);
+            try {
+                localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(initialProducts));
+            } catch {
+                // Ignore storage errors
+            }
         }
     }, []);
 
     // Save to localStorage whenever products change
     useEffect(() => {
         try {
-            localStorage.setItem('jannofresh:products_v3', JSON.stringify(products));
+            localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
         } catch {
             // Ignore storage errors
         }
