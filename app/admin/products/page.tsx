@@ -6,7 +6,7 @@ import AdminGuard from "@/components/AdminGuard";
 import { useProducts } from "@/context/ProductsContext";
 import { Product } from "@/lib/products";
 import { Plus, Edit2, Trash2, Search, Package } from "lucide-react";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 export default function AdminProductsPage() {
     const router = useRouter();
@@ -71,11 +71,12 @@ export default function AdminProductsPage() {
                                     className="bg-card rounded-2xl p-4 premium-shadow hover:translate-y-[-2px] transition-all"
                                 >
                                     <div className="relative h-40 w-full rounded-xl overflow-hidden mb-3">
-                                        <Image
+                                        <SafeImage
                                             src={product.image}
                                             alt={product.title}
                                             fill
                                             className="object-cover"
+                                            fallbackSrc="/images/veg-tomato.jpg"
                                         />
                                     </div>
                                     <div className="flex flex-col gap-2">

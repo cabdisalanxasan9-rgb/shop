@@ -73,7 +73,14 @@ export default function OrderDetailsModal({ isOpen, onClose, orderId }: OrderDet
                         {orderData.items.map((item) => (
                             <div key={item.id} className="bg-white rounded-2xl p-3 flex items-center gap-3 premium-shadow">
                                 <div className="w-14 h-14 rounded-xl bg-background overflow-hidden flex-shrink-0 border border-black/5">
-                                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                    <img
+                                        src={item.image}
+                                        alt={item.name}
+                                        className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            e.currentTarget.src = "/images/veg-tomato.jpg";
+                                        }}
+                                    />
                                 </div>
                                 <div className="flex flex-col flex-1 gap-0.5">
                                     <h4 className="font-bold text-foreground text-sm line-clamp-1">{item.name}</h4>
@@ -103,7 +110,14 @@ export default function OrderDetailsModal({ isOpen, onClose, orderId }: OrderDet
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white premium-shadow">
-                                        <img src={orderData.driver.image} alt="Driver" className="w-full h-full object-cover" />
+                                        <img
+                                            src={orderData.driver.image}
+                                            alt="Driver"
+                                            className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                e.currentTarget.src = "/images/driver-omar.svg";
+                                            }}
+                                        />
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm font-bold text-foreground">{orderData.driver.name}</span>

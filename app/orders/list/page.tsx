@@ -75,7 +75,14 @@ export default function MyOrdersPage() {
                                 <div className="flex -space-x-3">
                                     {getOrderImages(order).map((img, i) => (
                                         <div key={i} className="w-10 h-10 rounded-xl border-4 border-white overflow-hidden bg-background premium-shadow">
-                                            <img src={img} alt="Product" className="w-full h-full object-cover" />
+                                            <img
+                                                src={img}
+                                                alt="Product"
+                                                className="w-full h-full object-cover"
+                                                onError={(e) => {
+                                                    e.currentTarget.src = "/images/veg-tomato.jpg";
+                                                }}
+                                            />
                                         </div>
                                     ))}
                                     {(order.itemCount || order.items.length) > getOrderImages(order).length && (

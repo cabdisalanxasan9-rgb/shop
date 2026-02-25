@@ -6,7 +6,7 @@ import AdminGuard from "@/components/AdminGuard";
 import { useOrders } from "@/context/OrderContext";
 import { Order } from "@/lib/orders";
 import { ArrowLeft, Save } from "lucide-react";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 export default function AdminOrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter();
@@ -90,11 +90,12 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
                                 {order.items.map((item) => (
                                     <div key={item.id} className="flex items-center gap-4 p-4 bg-background rounded-xl">
                                         <div className="relative w-16 h-16 rounded-lg overflow-hidden">
-                                            <Image
+                                            <SafeImage
                                                 src={item.image}
                                                 alt={item.name}
                                                 fill
                                                 className="object-cover"
+                                                fallbackSrc="/images/veg-tomato.jpg"
                                             />
                                         </div>
                                         <div className="flex-1">
@@ -136,11 +137,12 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ id:
                                 <h3 className="text-sm font-bold text-foreground mb-2">Driver</h3>
                                 <div className="flex items-center gap-3">
                                     <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                                        <Image
+                                        <SafeImage
                                             src={order.driver.image}
                                             alt={order.driver.name}
                                             fill
                                             className="object-cover"
+                                            fallbackSrc="/images/driver-omar.svg"
                                         />
                                     </div>
                                     <div>

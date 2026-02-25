@@ -5,7 +5,7 @@ import { ChevronLeft, Trash2, Plus, Minus, MoveRight, Info, ShoppingBag } from "
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 export default function CartPage() {
     const { cart, removeFromCart, updateQuantity, subtotal, deliveryFee, total } = useCart();
@@ -50,12 +50,13 @@ export default function CartPage() {
                             className="bg-white rounded-[2rem] p-4 flex gap-4 premium-shadow relative group"
                         >
                             <div className="w-24 h-24 rounded-2xl overflow-hidden bg-background flex-shrink-0 relative">
-                                <Image
+                                <SafeImage
                                     src={item.image}
                                     alt={item.title}
                                     fill
                                     className="object-cover"
                                     sizes="96px"
+                                    fallbackSrc="/images/veg-tomato.jpg"
                                 />
                             </div>
 

@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useProducts } from "@/context/ProductsContext";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 // Icon mapping for dynamic features
 const iconMap: Record<string, any> = {
@@ -93,12 +93,13 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
         <div className="flex flex-col bg-background min-h-screen pb-32">
             {/* Product Image Stage */}
             <div className="relative h-[450px] w-full">
-                <Image
+                <SafeImage
                     src={product.image}
                     alt={product.title}
                     fill
                     className="object-cover"
                     priority
+                    fallbackSrc="/images/veg-tomato.jpg"
                 />
 
                 {/* Overlay Actions */}

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useProducts } from "@/context/ProductsContext";
 import { useCart } from "@/context/CartContext";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 export default function FavoritesPage() {
     const router = useRouter();
@@ -45,7 +45,7 @@ export default function FavoritesPage() {
                 {favoriteProducts.map((item) => (
                     <div key={item.id} className="bg-white rounded-[2rem] p-4 flex items-center gap-4 premium-shadow relative group overflow-hidden">
                         <div className="w-20 h-20 rounded-2xl bg-background overflow-hidden flex-shrink-0 border border-black/5 relative">
-                            <Image src={item.image} alt={item.title} fill className="object-cover" sizes="80px" />
+                            <SafeImage src={item.image} alt={item.title} fill className="object-cover" sizes="80px" fallbackSrc="/images/veg-tomato.jpg" />
                         </div>
 
                         <div className="flex flex-col flex-1 gap-1">

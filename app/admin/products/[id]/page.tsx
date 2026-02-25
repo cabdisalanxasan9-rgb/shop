@@ -161,7 +161,14 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                             {errors.image && <p className="text-red-500 text-xs">{errors.image}</p>}
                             {formData.image && (
                                 <div className="relative h-32 w-full rounded-xl overflow-hidden border border-black/5">
-                                    <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                                    <img
+                                        src={formData.image}
+                                        alt="Preview"
+                                        className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            e.currentTarget.src = "/images/veg-tomato.jpg";
+                                        }}
+                                    />
                                 </div>
                             )}
                         </div>
