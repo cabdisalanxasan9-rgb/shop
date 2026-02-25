@@ -134,16 +134,22 @@ export async function findAuthUserByEmail(email: string, includePassword = false
     const normalizedEmail = email.toLowerCase().trim();
 
     if (mongoUri) {
-        await connectToDatabase();
-        const query = User.findOne({ email: normalizedEmail });
-        if (includePassword) {
-            query.select('+password name email phone avatar createdAt');
-        } else {
-            query.select('name email phone avatar createdAt');
+        try {
+            await connectToDatabase();
+            const query = User.findOne({ email: normalizedEmail });
+            if (includePassword) {
+                query.select('+password name email phone avatar createdAt');
+            } else {
+                query.select('name email phone avatar createdAt');
+            }
+            const user = await query;
+            if (!user) return null;
+            return normalizeAuthUser(user, includePassword);
+        } catch (error) {
+            if (!canFallbackToMemory(error)) {
+                throw error;
+            }
         }
-        const user = await query;
-        if (!user) return null;
-        return normalizeAuthUser(user, includePassword);
     }
 
     const memoryUser = getMemoryUsers().find((item) => item.email === normalizedEmail);
@@ -162,10 +168,16 @@ export async function findAuthUserByEmail(email: string, includePassword = false
 
 export async function findAuthUserById(id: string): Promise<AuthUserRecord | null> {
     if (mongoUri) {
-        await connectToDatabase();
-        const user = await User.findById(id).select('name email phone avatar createdAt');
-        if (!user) return null;
-        return normalizeAuthUser(user, false);
+        try {
+            await connectToDatabase();
+            const user = await User.findById(id).select('name email phone avatar createdAt');
+            if (!user) return null;
+            return normalizeAuthUser(user, false);
+        } catch (error) {
+            if (!canFallbackToMemory(error)) {
+                throw error;
+            }
+        }
     }
 
     const memoryUser = getMemoryUsers().find((item) => item.id === id);
@@ -191,15 +203,21 @@ export async function createAuthUser(input: {
     const normalizedEmail = input.email.toLowerCase().trim();
 
     if (mongoUri) {
-        await connectToDatabase();
-        const user = await User.create({
-            name: input.name.trim(),
-            email: normalizedEmail,
-            password: input.password,
-            phone: (input.phone || '').trim(),
-            avatar: input.avatar || '',
-        });
-        return normalizeAuthUser(user, false);
+        try {
+            await connectToDatabase();
+            const user = await User.create({
+                name: input.name.trim(),
+                email: normalizedEmail,
+                password: input.password,
+                phone: (input.phone || '').trim(),
+                avatar: input.avatar || '',
+            });
+            return normalizeAuthUser(user, false);
+        } catch (error) {
+            if (!canFallbackToMemory(error)) {
+                throw error;
+            }
+        }
     }
 
     const passwordHash = await bcrypt.hash(input.password, 12);
@@ -332,4 +350,19 @@ export function mapAuthError(error: any, fallback: string) {
     }
 
     return { status: 500, error: fallback };
+}
+
+function canFallbackToMemory(error: any) {
+    const rawMessage = typeof error?.message === 'string' ? error.message : '';
+    if (!rawMessage) return false;
+
+    return (
+        error?.name === 'MongoServerSelectionError' ||
+        error?.name === 'MongoParseError' ||
+        /MONGODB_URI is not set/i.test(rawMessage) ||
+        /Invalid scheme|Invalid connection string|URI malformed/i.test(rawMessage) ||
+        /auth failed|Authentication failed|bad auth|password|SCRAM/i.test(rawMessage) ||
+        /querySrv ENOTFOUND|getaddrinfo ENOTFOUND|DNS/i.test(rawMessage) ||
+        /ECONNREFUSED|timed out|failed to connect/i.test(rawMessage)
+    );
 }
