@@ -4,19 +4,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminGuard from "@/components/AdminGuard";
 import { useProducts } from "@/context/ProductsContext";
-import { Product } from "@/lib/products";
+import { Product, CATEGORIES as categories } from "@/lib/products";
 import { ArrowLeft, Save } from "lucide-react";
-
-const categories = [
-    { id: "leafy-greens", label: "Leafy Greens" },
-    { id: "root-vegies", label: "Root Vegetables" },
-    { id: "peppers", label: "Peppers" },
-    { id: "fruits", label: "Fruits" },
-    { id: "grains", label: "Grains" },
-    { id: "herbs", label: "Herbs" },
-    { id: "fungi", label: "Fungi" },
-    { id: "berries", label: "Berries" },
-];
 
 export default function NewProductPage() {
     const router = useRouter();
