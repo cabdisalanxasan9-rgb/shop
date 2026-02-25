@@ -22,12 +22,12 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
     // Load products from localStorage or use initial data
     useEffect(() => {
         try {
-            const saved = localStorage.getItem('jannofresh:products_v2');
+            const saved = localStorage.getItem('jannofresh:products_v3');
             if (saved) {
                 setProducts(JSON.parse(saved));
             } else {
                 setProducts(initialProducts);
-                localStorage.setItem('jannofresh:products_v2', JSON.stringify(initialProducts));
+                localStorage.setItem('jannofresh:products_v3', JSON.stringify(initialProducts));
             }
         } catch {
             setProducts(initialProducts);
@@ -37,7 +37,7 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
     // Save to localStorage whenever products change
     useEffect(() => {
         try {
-            localStorage.setItem('jannofresh:products_v2', JSON.stringify(products));
+            localStorage.setItem('jannofresh:products_v3', JSON.stringify(products));
         } catch {
             // Ignore storage errors
         }

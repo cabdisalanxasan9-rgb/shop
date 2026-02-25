@@ -33,7 +33,7 @@ export const initialProducts: Product[] = [
         title: "Fresh Red Tomatoes",
         price: 2.50,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1518977676601-b53f02bad675?auto=format&fit=crop&q=80&w=600",
+        image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=600",
         isFavorite: true,
     },
     {
@@ -114,7 +114,7 @@ export const initialProducts: Product[] = [
         title: "Wild Mushrooms",
         price: 5.50,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1563212623-0df1567bc7d2?auto=format&fit=crop&q=80&w=600",
+        image: "https://images.unsplash.com/photo-1504670610472-104991317221?auto=format&fit=crop&q=80&w=600",
     },
     {
         id: "p12",
@@ -146,7 +146,7 @@ export const initialProducts: Product[] = [
         title: "Sweet Bananas",
         price: 1.20,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&q=80&w=600",
+        image: "https://images.unsplash.com/photo-1571771894821-ad99c9a3c747?auto=format&fit=crop&q=80&w=600",
     },
 ];
 
