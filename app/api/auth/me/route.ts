@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectToDatabase, mapAuthError, sanitizeUser, User, verifyToken } from '@/lib/server-auth';
+import { findAuthUserById, mapAuthError, sanitizeUser, verifyToken } from '@/lib/server-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,8 +16,7 @@ export async function GET(req: NextRequest) {
 
         const decoded = verifyToken(token);
 
-        await connectToDatabase();
-        const user = await User.findById(decoded.id).select('name email phone avatar createdAt');
+        const user = await findAuthUserById(decoded.id);
 
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });

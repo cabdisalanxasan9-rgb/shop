@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-    connectToDatabase,
-    User,
+    createAuthUser,
+    findAuthUserByEmail,
     generateToken,
     sanitizeUser,
     validateRegisterInput,
@@ -19,17 +19,15 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: validationError }, { status: 400 });
         }
 
-        await connectToDatabase();
-
         const normalizedEmail = email.toLowerCase().trim();
-        const existingUser = await User.findOne({ email: normalizedEmail }).select('_id').lean();
+        const existingUser = await findAuthUserByEmail(normalizedEmail, false);
         if (existingUser) {
             return NextResponse.json({ error: 'User with this email already exists' }, { status: 400 });
         }
 
         const avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=4ade80&color=fff`;
 
-        const user = await User.create({
+        const user = await createAuthUser({
             name: name.trim(),
             email: normalizedEmail,
             password,
@@ -37,7 +35,7 @@ export async function POST(req: NextRequest) {
             avatar,
         });
 
-        const token = generateToken(user._id.toString());
+        const token = generateToken(user.id);
 
         return NextResponse.json({
             message: 'User registered successfully',

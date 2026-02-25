@@ -8,8 +8,29 @@ type MongoCache = {
     promise: Promise<typeof mongoose> | null;
 };
 
+type InMemoryAuthUser = {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    phone: string;
+    avatar: string;
+    createdAt: Date;
+};
+
+type AuthUserRecord = {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    avatar: string;
+    createdAt: Date;
+    password?: string;
+};
+
 declare global {
     var mongooseCache: MongoCache | undefined;
+    var authMemoryUsers: InMemoryAuthUser[] | undefined;
 }
 
 const mongoUri = process.env.MONGODB_URI;
@@ -17,6 +38,26 @@ const jwtSecret = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in
 
 const cache: MongoCache = global.mongooseCache || { conn: null, promise: null };
 global.mongooseCache = cache;
+
+function getMemoryUsers() {
+    if (!global.authMemoryUsers) {
+        global.authMemoryUsers = [];
+    }
+    return global.authMemoryUsers;
+}
+
+function normalizeAuthUser(user: any, includePassword = false): AuthUserRecord {
+    const userObject = user?.toObject ? user.toObject() : user;
+    return {
+        id: userObject._id?.toString() || userObject.id,
+        name: userObject.name,
+        email: userObject.email,
+        phone: userObject.phone || '',
+        avatar: userObject.avatar || '',
+        createdAt: userObject.createdAt || new Date(),
+        ...(includePassword ? { password: userObject.password } : {}),
+    };
+}
 
 const userSchema = new Schema({
     name: {
@@ -85,6 +126,105 @@ export async function connectToDatabase() {
     return cache.conn;
 }
 
+export function getAuthStorageMode(): 'mongo' | 'memory' {
+    return mongoUri ? 'mongo' : 'memory';
+}
+
+export async function findAuthUserByEmail(email: string, includePassword = false): Promise<AuthUserRecord | null> {
+    const normalizedEmail = email.toLowerCase().trim();
+
+    if (mongoUri) {
+        await connectToDatabase();
+        const query = User.findOne({ email: normalizedEmail });
+        if (includePassword) {
+            query.select('+password name email phone avatar createdAt');
+        } else {
+            query.select('name email phone avatar createdAt');
+        }
+        const user = await query;
+        if (!user) return null;
+        return normalizeAuthUser(user, includePassword);
+    }
+
+    const memoryUser = getMemoryUsers().find((item) => item.email === normalizedEmail);
+    if (!memoryUser) return null;
+
+    return {
+        id: memoryUser.id,
+        name: memoryUser.name,
+        email: memoryUser.email,
+        phone: memoryUser.phone,
+        avatar: memoryUser.avatar,
+        createdAt: memoryUser.createdAt,
+        ...(includePassword ? { password: memoryUser.password } : {}),
+    };
+}
+
+export async function findAuthUserById(id: string): Promise<AuthUserRecord | null> {
+    if (mongoUri) {
+        await connectToDatabase();
+        const user = await User.findById(id).select('name email phone avatar createdAt');
+        if (!user) return null;
+        return normalizeAuthUser(user, false);
+    }
+
+    const memoryUser = getMemoryUsers().find((item) => item.id === id);
+    if (!memoryUser) return null;
+
+    return {
+        id: memoryUser.id,
+        name: memoryUser.name,
+        email: memoryUser.email,
+        phone: memoryUser.phone,
+        avatar: memoryUser.avatar,
+        createdAt: memoryUser.createdAt,
+    };
+}
+
+export async function createAuthUser(input: {
+    name: string;
+    email: string;
+    password: string;
+    phone?: string;
+    avatar?: string;
+}): Promise<AuthUserRecord> {
+    const normalizedEmail = input.email.toLowerCase().trim();
+
+    if (mongoUri) {
+        await connectToDatabase();
+        const user = await User.create({
+            name: input.name.trim(),
+            email: normalizedEmail,
+            password: input.password,
+            phone: (input.phone || '').trim(),
+            avatar: input.avatar || '',
+        });
+        return normalizeAuthUser(user, false);
+    }
+
+    const passwordHash = await bcrypt.hash(input.password, 12);
+    const memoryUser: InMemoryAuthUser = {
+        id: `mem_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+        name: input.name.trim(),
+        email: normalizedEmail,
+        password: passwordHash,
+        phone: (input.phone || '').trim(),
+        avatar: input.avatar || '',
+        createdAt: new Date(),
+    };
+
+    getMemoryUsers().push(memoryUser);
+
+    return {
+        id: memoryUser.id,
+        name: memoryUser.name,
+        email: memoryUser.email,
+        phone: memoryUser.phone,
+        avatar: memoryUser.avatar,
+        createdAt: memoryUser.createdAt,
+    };
+}
+
 export function generateToken(id: string) {
     return jwt.sign({ id }, jwtSecret, {
         expiresIn: '7d'
@@ -149,7 +289,7 @@ export function mapAuthError(error: any, fallback: string) {
     if (rawMessage.includes('MONGODB_URI is not set')) {
         return {
             status: 500,
-            error: 'Server configuration error: MONGODB_URI is missing in environment variables.'
+            error: 'Database is not configured for persistent mode. Add MONGODB_URI to enable persistent accounts.'
         };
     }
 
