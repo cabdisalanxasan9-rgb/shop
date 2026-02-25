@@ -10,11 +10,6 @@ const nextConfig = {
             },
         ],
     },
-    experimental: {
-        // Work around Windows Turbopack persistence issues (SST write failures)
-        turbopackFileSystemCacheForDev: false,
-        turbopackFileSystemCacheForBuild: false,
-    },
 };
 
 export default nextConfig;
