@@ -15,14 +15,14 @@ export interface Product {
 }
 
 export const CATEGORIES = [
-    { id: "leafy-greens", label: "Leafy Greens", icon: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=200", color: "bg-emerald-50 text-emerald-600" },
-    { id: "root-vegies", label: "Root Vegies", icon: "https://images.unsplash.com/photo-1590779033100-9f60705a2f3b?auto=format&fit=crop&q=80&w=200", color: "bg-orange-50 text-orange-600" },
-    { id: "peppers", label: "Peppers", icon: "https://images.unsplash.com/photo-1566232392379-afd9298e6a46?auto=format&fit=crop&q=80&w=200", color: "bg-red-50 text-red-600" },
-    { id: "fruits", label: "Fruits", icon: "https://images.unsplash.com/photo-1619566639371-13ed1100293a?auto=format&fit=crop&q=80&w=200", color: "bg-yellow-50 text-yellow-600" },
-    { id: "grains", label: "Grains", icon: "https://images.unsplash.com/photo-1586439702132-73016aae2449?auto=format&fit=crop&q=80&w=200", color: "bg-amber-50 text-amber-600" },
-    { id: "herbs", label: "Herbs", icon: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?auto=format&fit=crop&q=80&w=200", color: "bg-teal-50 text-teal-600" },
-    { id: "fungi", label: "Fungi", icon: "https://images.unsplash.com/photo-1563212623-0df1567bc7d2?auto=format&fit=crop&q=80&w=200", color: "bg-stone-50 text-stone-600" },
-    { id: "berries", label: "Berries", icon: "https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&q=80&w=200", color: "bg-purple-50 text-purple-600" },
+    { id: "leafy-greens", label: "Leafy Greens", icon: "/images/cat-greens.jpg", color: "bg-emerald-50 text-emerald-600" },
+    { id: "root-vegies", label: "Root Vegies", icon: "/images/cat-root.jpg", color: "bg-orange-50 text-orange-600" },
+    { id: "peppers", label: "Peppers", icon: "/images/cat-peppers.jpg", color: "bg-red-50 text-red-600" },
+    { id: "fruits", label: "Fruits", icon: "/images/cat-fruits.jpg", color: "bg-yellow-50 text-yellow-600" },
+    { id: "grains", label: "Grains", icon: "/images/cat-grains.jpg", color: "bg-amber-50 text-amber-600" },
+    { id: "herbs", label: "Herbs", icon: "/images/cat-herbs.jpg", color: "bg-teal-50 text-teal-600" },
+    { id: "fungi", label: "Fungi", icon: "/images/cat-fungi.jpg", color: "bg-stone-50 text-stone-600" },
+    { id: "berries", label: "Berries", icon: "/images/cat-berries.jpg", color: "bg-purple-50 text-purple-600" },
 ];
 
 // Initial products data with high-quality cloud images
@@ -33,7 +33,7 @@ export const initialProducts: Product[] = [
         title: "Fresh Red Tomatoes",
         price: 2.50,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-tomato.jpg",
         isFavorite: true,
         description: "These vine-ripened tomatoes are locally grown and bursting with flavor. Rich in lycopene and vitamin C, they are perfect for salads, sauces, or just eating raw.",
         tags: ["Non-GMO", "Vine-Ripened"],
@@ -54,7 +54,7 @@ export const initialProducts: Product[] = [
         title: "Organic Broccoli",
         price: 3.20,
         unit: "pc",
-        image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-broccoli.jpg",
         description: "Our organic broccoli is locally sourced and harvested daily to ensure peak freshness. It's packed with essential nutrients, including high concentrations of Vitamin C and Vitamin K.",
         tags: ["Pesticide Free", "Organic"],
         features: [
@@ -74,7 +74,7 @@ export const initialProducts: Product[] = [
         title: "Sweet Carrots",
         price: 1.80,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-carrot.jpg",
         description: "Crunchy, sweet, and vibrant carrots. These root vegetables are an excellent source of beta carotene, fiber, vitamin K1, and potassium.",
         tags: ["Sweet & Crisp", "High Beta Carotene"],
         features: [
@@ -94,7 +94,7 @@ export const initialProducts: Product[] = [
         title: "Bell Peppers",
         price: 4.50,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1566232392379-afd9298e6a46?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-peppers.jpg",
         description: "Colorful and crisp bell peppers. These peppers are incredibly versatile and packed with vitamin C and other antioxidants.",
         tags: ["Extra Sweet", "Rich Color"],
         features: [
@@ -114,7 +114,7 @@ export const initialProducts: Product[] = [
         title: "Organic Cucumbers",
         price: 1.20,
         unit: "pc",
-        image: "https://images.unsplash.com/photo-1449339854873-750e6df51301?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-cucumber.jpg",
         description: "Cool and refreshing organic cucumbers. Perfect for salads, pickling, or a healthy low-calorie snack.",
         tags: ["Cool & Crisp", "High Hydration"],
         features: [
@@ -134,7 +134,7 @@ export const initialProducts: Product[] = [
         title: "Fresh Garlic",
         price: 0.50,
         unit: "pc",
-        image: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-garlic.jpg",
         description: "Pungent and flavorful fresh garlic. An essential ingredient in kitchens worldwide, known for its health benefits.",
         tags: ["Strong Flavor", "Natural Antibiotic"],
         features: [
@@ -154,7 +154,7 @@ export const initialProducts: Product[] = [
         title: "Yellow Onions",
         price: 1.50,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-onion.jpg",
         description: "Versatile yellow onions with a rich, complex flavor that sweetens when cooked. A staple for soups and stews.",
         tags: ["Staple Ingredient", "Rich Flavor"],
         features: [
@@ -174,7 +174,7 @@ export const initialProducts: Product[] = [
         title: "Baby Spinach",
         price: 2.80,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-spinach.jpg",
         description: "Tender and nutrient-dense baby spinach. Excellent source of iron and vitamins, perfect for salads or quick saut\u00e9s.",
         tags: ["Nutrient Dense", "Freshly Picked"],
         features: [
@@ -194,7 +194,7 @@ export const initialProducts: Product[] = [
         title: "Fresh Eggplant",
         price: 2.00,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1528137858148-d018f3a34494?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-eggplant.jpg",
         description: "Glossy, deep purple eggplants with a creamy texture when cooked. These are excellent for roasting, grilling, or making traditional dishes like baba ganoush.",
         tags: ["High Fiber", "Low Calorie"],
         features: [
@@ -214,7 +214,7 @@ export const initialProducts: Product[] = [
         title: "Organic Potatoes",
         price: 1.40,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1518977676601-b53f02bad675?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-potato.jpg",
         description: "Solid, earthy organic potatoes. These all-purpose potatoes are great for mashing, roasting, or frying.",
         tags: ["Energy Source", "All-Purpose"],
         features: [
@@ -234,7 +234,7 @@ export const initialProducts: Product[] = [
         title: "Wild Mushrooms",
         price: 5.50,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1504670610472-104991317221?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-mushroom.jpg",
         description: "Earthy and aromatic wild mushrooms. These provide a rich, savory flavor known as umami and are a great meat substitute.",
         tags: ["Umami Rich", "Wild Harvest"],
         features: [
@@ -254,7 +254,7 @@ export const initialProducts: Product[] = [
         title: "Bell Pepper Mix",
         price: 4.80,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1518977822534-7049a6feec45?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-peppers-mix.jpg",
         description: "A vibrant medley of fresh bell peppers. Perfect for fajitas, roasting, or fresh dipping.",
         tags: ["High Vitamin C", "Colorful Mix"],
         features: [
@@ -274,7 +274,7 @@ export const initialProducts: Product[] = [
         title: "Organic Rolled Oats",
         price: 3.50,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1586439702132-73016aae2449?auto=format&fit=crop&q=80&w=600",
+        image: "/images/veg-oats.jpg",
         description: "High-quality organic rolled oats. A Heart-healthy staple for breakfast porridge, baking, or granola.",
         tags: ["Heart Healthy", "Slow Energy"],
         features: [
@@ -294,7 +294,7 @@ export const initialProducts: Product[] = [
         title: "Fresh Strawberries",
         price: 6.50,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&q=80&w=600",
+        image: "/images/cat-berries.jpg",
         description: "Sweet, juicy, and aromatic strawberries harvested at the peak of ripeness. High in Vitamin C and antioxidants.",
         tags: ["Super Sweet", "Organic"],
         features: [
@@ -314,7 +314,7 @@ export const initialProducts: Product[] = [
         title: "Sweet Bananas",
         price: 1.20,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1571771894821-ad99c9a3c747?auto=format&fit=crop&q=80&w=600",
+        image: "/images/cat-fruits.jpg",
         description: "Perfectly ripe and sweet bananas, rich in potassium and quick energy. A perfect snack for any time of the day.",
         tags: ["Quick Energy", "Potassium Rich"],
         features: [

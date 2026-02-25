@@ -48,7 +48,7 @@ export const ordersData: Order[] = [
                 name: "Fresh Red Tomatoes",
                 price: 2.50,
                 quantity: 4,
-                image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=200",
+                image: "/images/veg-tomato.jpg",
                 weight: "2kg"
             },
             {
@@ -56,7 +56,7 @@ export const ordersData: Order[] = [
                 name: "Organic Broccoli",
                 price: 3.20,
                 quantity: 2,
-                image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&q=80&w=200",
+                image: "/images/veg-broccoli.jpg",
                 weight: "2pcs"
             },
             {
@@ -64,7 +64,7 @@ export const ordersData: Order[] = [
                 name: "Sweet Carrots",
                 price: 1.80,
                 quantity: 3,
-                image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=200",
+                image: "/images/veg-carrot.jpg",
                 weight: "3kg"
             }
         ],
@@ -78,7 +78,7 @@ export const ordersData: Order[] = [
         driver: {
             name: "Omar Ali",
             rating: 4.8,
-            image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=100",
+            image: "/images/driver-omar.svg",
             phone: "+252 61 555 0123"
         },
         address: "Maka Al-Mukarama Street, Waberi District, Mogadishu"
@@ -97,7 +97,7 @@ export const ordersData: Order[] = [
                 name: "Baby Spinach",
                 price: 2.80,
                 quantity: 2,
-                image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=200",
+                image: "/images/veg-spinach.jpg",
                 weight: "1kg"
             },
             {
@@ -105,7 +105,7 @@ export const ordersData: Order[] = [
                 name: "Bell Pepper Mix",
                 price: 4.80,
                 quantity: 1,
-                image: "https://images.unsplash.com/photo-1518977822534-7049a6feec45?auto=format&fit=crop&q=80&w=200",
+                image: "/images/veg-peppers-mix.jpg",
                 weight: "1kg"
             }
         ],
@@ -119,7 +119,7 @@ export const ordersData: Order[] = [
         driver: {
             name: "Ahmed Hassan",
             rating: 4.9,
-            image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100",
+            image: "/images/driver-ahmed.svg",
             phone: "+252 61 555 0456"
         },
         address: "Hodan District, Near KM5, Mogadishu"
@@ -138,7 +138,7 @@ export const ordersData: Order[] = [
                 name: "Wild Mushrooms",
                 price: 5.50,
                 quantity: 2,
-                image: "https://images.unsplash.com/photo-1504670610472-104991317221?auto=format&fit=crop&q=80&w=200",
+                image: "/images/veg-mushroom.jpg",
                 weight: "500g"
             },
             {
@@ -146,7 +146,7 @@ export const ordersData: Order[] = [
                 name: "Fresh Strawberries",
                 price: 6.50,
                 quantity: 1,
-                image: "https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&q=80&w=200",
+                image: "/images/cat-berries.jpg",
                 weight: "500g"
             }
         ],

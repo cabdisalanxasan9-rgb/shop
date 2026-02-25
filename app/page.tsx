@@ -70,7 +70,7 @@ export default function HomePage() {
           <section className="px-6">
             <div className="relative h-48 md:h-64 w-full rounded-[2.5rem] overflow-hidden group premium-shadow ring-1 ring-black/5">
               <Image
-                src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1200"
+                src="/images/hero-banner.jpg"
                 alt="Fresh farm banner"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"

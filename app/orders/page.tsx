@@ -112,7 +112,7 @@ export default function OrdersPage() {
             <div className="px-6 pb-8">
                 <div className="relative h-44 rounded-[2.5rem] overflow-hidden premium-shadow group">
                     <img
-                        src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80&w=800"
+                        src="/images/hero-banner.jpg"
                         alt="Delivery map"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />

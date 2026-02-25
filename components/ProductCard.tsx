@@ -20,7 +20,12 @@ interface ProductCardProps {
 export default function ProductCard({ id = "1", title, price, unit, image, isFavorite: initialFavorite = false }: ProductCardProps) {
     const [isFavorite, setIsFavorite] = useState(initialFavorite);
     const [quantity, setQuantity] = useState(1);
+    const [imageSrc, setImageSrc] = useState(image);
     const { addToCart } = useCart();
+
+    React.useEffect(() => {
+        setImageSrc(image);
+    }, [image]);
 
     const handleAddToCart = () => {
         addToCart({ id, title, price, unit, image }, quantity);
@@ -30,11 +35,12 @@ export default function ProductCard({ id = "1", title, price, unit, image, isFav
         <div className="bg-card rounded-[2.5rem] p-4 flex flex-col gap-3 premium-shadow group hover:translate-y-[-4px] transition-all duration-300">
             <Link href={`/product/${id}`} className="block relative h-40 w-full rounded-3xl overflow-hidden mb-1">
                 <Image
-                    src={image}
+                    src={imageSrc}
                     alt={title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                     sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                    onError={() => setImageSrc("/images/veg-tomato.jpg")}
                 />
                 {/* Favorite Toggle */}
                 <button
