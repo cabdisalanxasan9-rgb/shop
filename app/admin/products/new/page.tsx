@@ -16,6 +16,18 @@ export default function NewProductPage() {
         price: 0,
         unit: "kg",
         image: "",
+        description: "",
+        tags: [],
+        features: [
+            { icon: "Leaf", label: "ORIGIN", value: "" },
+            { icon: "Calendar", label: "SHELF LIFE", value: "" },
+            { icon: "Apple", label: "VITAMINS", value: "" },
+        ],
+        highlights: ["", "", ""],
+        benefits: [
+            { title: "", description: "" },
+            { title: "", description: "" },
+        ]
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -43,6 +55,11 @@ export default function NewProductPage() {
             unit: formData.unit!,
             image: formData.image!,
             isFavorite: false,
+            description: formData.description || `Fresh and high-quality ${formData.title}.`,
+            tags: formData.tags || [],
+            features: formData.features || [],
+            highlights: formData.highlights?.filter(h => h.trim() !== "") || [],
+            benefits: formData.benefits?.filter(b => b.title.trim() !== "") || [],
         };
 
         addProduct(newProduct);
@@ -159,6 +176,49 @@ export default function NewProductPage() {
                                     <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
                                 </div>
                             )}
+                        </div>
+
+                        {/* Description */}
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-bold text-foreground">Detailed Description</label>
+                            <textarea
+                                value={formData.description}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                placeholder="Tell customers about this fresh product..."
+                                rows={3}
+                                className="w-full p-4 rounded-xl border border-black/5 focus:border-primary focus:outline-none text-foreground placeholder:text-subtitle resize-none"
+                            />
+                        </div>
+
+                        {/* Tags */}
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-bold text-foreground">Tags (comma separated)</label>
+                            <input
+                                type="text"
+                                value={formData.tags?.join(", ")}
+                                onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(",").map(t => t.trim()) })}
+                                placeholder="Non-GMO, Organic, Local"
+                                className="w-full h-12 px-4 rounded-xl border border-black/5 focus:border-primary focus:outline-none text-foreground placeholder:text-subtitle"
+                            />
+                        </div>
+
+                        {/* Highlights */}
+                        <div className="flex flex-col gap-2">
+                            <label className="text-sm font-bold text-foreground">Key Highlights</label>
+                            {formData.highlights?.map((highlight, idx) => (
+                                <input
+                                    key={idx}
+                                    type="text"
+                                    value={highlight}
+                                    onChange={(e) => {
+                                        const newHighlights = [...(formData.highlights || [])];
+                                        newHighlights[idx] = e.target.value;
+                                        setFormData({ ...formData, highlights: newHighlights });
+                                    }}
+                                    placeholder={`Highlight ${idx + 1}`}
+                                    className="w-full h-10 px-4 rounded-xl border border-black/5 focus:border-primary focus:outline-none text-foreground text-sm placeholder:text-subtitle"
+                                />
+                            ))}
                         </div>
                     </div>
 

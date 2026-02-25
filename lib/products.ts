@@ -254,7 +254,7 @@ export const initialProducts: Product[] = [
         title: "Bell Pepper Mix",
         price: 4.80,
         unit: "kg",
-        image: "https://images.unsplash.com/photo-1566232392379-afd9298e6a46?auto=format&fit=crop&q=80&w=600",
+        image: "https://images.unsplash.com/photo-1518977822534-7049a6feec45?auto=format&fit=crop&q=80&w=600",
         description: "A vibrant medley of fresh bell peppers. Perfect for fajitas, roasting, or fresh dipping.",
         tags: ["High Vitamin C", "Colorful Mix"],
         features: [

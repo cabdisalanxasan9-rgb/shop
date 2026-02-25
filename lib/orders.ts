@@ -41,31 +41,31 @@ export const ordersData: Order[] = [
         date: "Oct 24, 2023",
         total: 24.50,
         itemCount: 5,
-        labels: "Potato, Bell Pepper, Carrots...",
+        labels: "Fresh Red Tomatoes, Organic Broccoli, Sweet Carrots...",
         items: [
             {
                 id: 1,
-                name: "Organic Bananas",
-                price: 4.99,
-                quantity: 2,
-                image: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&q=80&w=200",
-                weight: "1kg"
+                name: "Fresh Red Tomatoes",
+                price: 2.50,
+                quantity: 4,
+                image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=200",
+                weight: "2kg"
             },
             {
                 id: 2,
-                name: "Red Bell Pepper",
-                price: 2.50,
-                quantity: 3,
-                image: "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&q=80&w=200",
-                weight: "500g"
+                name: "Organic Broccoli",
+                price: 3.20,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&q=80&w=200",
+                weight: "2pcs"
             },
             {
                 id: 3,
-                name: "Fresh Avocado",
-                price: 3.99,
-                quantity: 1,
-                image: "https://images.unsplash.com/photo-1523049673856-38abcd7f905d?auto=format&fit=crop&q=80&w=200",
-                weight: "2pcs"
+                name: "Sweet Carrots",
+                price: 1.80,
+                quantity: 3,
+                image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=200",
+                weight: "3kg"
             }
         ],
         timeline: [
@@ -90,22 +90,22 @@ export const ordersData: Order[] = [
         date: "Today, 10:30 AM",
         total: 18.20,
         itemCount: 3,
-        labels: "Broccoli, Tomato, Spinach",
+        labels: "Leafy Greens, Bell Peppers, Onions",
         items: [
             {
                 id: 4,
-                name: "Fresh Broccoli",
-                price: 5.99,
-                quantity: 1,
-                image: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&q=80&w=200",
-                weight: "500g"
+                name: "Baby Spinach",
+                price: 2.80,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=200",
+                weight: "1kg"
             },
             {
                 id: 5,
-                name: "Roma Tomatoes",
-                price: 3.99,
-                quantity: 2,
-                image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=200",
+                name: "Bell Pepper Mix",
+                price: 4.80,
+                quantity: 1,
+                image: "https://images.unsplash.com/photo-1518977822534-7049a6feec45?auto=format&fit=crop&q=80&w=200",
                 weight: "1kg"
             }
         ],
@@ -131,22 +131,22 @@ export const ordersData: Order[] = [
         date: "Oct 18, 2023",
         total: 42.00,
         itemCount: 2,
-        labels: "Mushroom, Salad mix...",
+        labels: "Wild Mushrooms, Strawberries",
         items: [
             {
                 id: 6,
-                name: "Fresh Mushrooms",
-                price: 12.00,
-                quantity: 1,
-                image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=200",
-                weight: "250g"
+                name: "Wild Mushrooms",
+                price: 5.50,
+                quantity: 2,
+                image: "https://images.unsplash.com/photo-1504670610472-104991317221?auto=format&fit=crop&q=80&w=200",
+                weight: "500g"
             },
             {
                 id: 7,
-                name: "Mixed Salad Greens",
-                price: 30.00,
+                name: "Fresh Strawberries",
+                price: 6.50,
                 quantity: 1,
-                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=200",
+                image: "https://images.unsplash.com/photo-1543528176-61b2395143a4?auto=format&fit=crop&q=80&w=200",
                 weight: "500g"
             }
         ],
@@ -165,10 +165,10 @@ export function getOrderById(id: string): Order | undefined {
 export function getOrdersByStatus(status?: string, orders?: Order[]): Order[] {
     const ordersToFilter = orders || ordersData;
     if (!status || status === "All") return ordersToFilter;
-    if (status === "Ongoing") return ordersToFilter.filter(order => 
+    if (status === "Ongoing") return ordersToFilter.filter(order =>
         order.status === "In Progress" || order.status === "Processing" || order.status === "Confirmed" || order.status === "On the way"
     );
-    if (status === "History") return ordersToFilter.filter(order => 
+    if (status === "History") return ordersToFilter.filter(order =>
         order.status === "Delivered" || order.status === "Cancelled"
     );
     return ordersToFilter.filter(order => order.status === status);
